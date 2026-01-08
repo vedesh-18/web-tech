@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
   display: flex;
   justify-content: center;
@@ -11,3 +12,19 @@ canvas {
   background-color: white;
   border: 1px solid #000;
 }
+=======
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f0f0f0;
+}
+
+canvas {
+  background-color: white;
+  border: 1px solid #000;
+}
+>>>>>>> aa10dc0e3687c52e445df8d251edd0c7082bdd1a
+zz
