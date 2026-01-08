@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
     font-family: Arial, sans-serif;
     background: #f7f9fc;
@@ -116,3 +117,123 @@ th {
     justify-content: center;
     font-weight: bold;
 }
+=======
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f9fc;
+    min-height: 100vh;
+    text-align: center;
+    color: #333;
+}
+
+h2 {
+    color: #4a5568;
+}
+
+form {
+    background: #ffffff;
+    padding: 20px;
+    margin: 25px auto;
+    width: 320px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+input {
+    width: 90%;
+    padding: 9px;
+    margin: 8px 0;
+    border: 1px solid #e2e8f0;
+    border-radius: 4px;
+    background: #fdfdfd;
+}
+
+button {
+    padding: 9px 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background: #cbd5f5;
+    color: #2d3748;
+}
+
+button:hover {
+    background: #b8c4f2;
+}
+
+table {
+    width: 85%;
+    margin: auto;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+th {
+    background: #edf2ff;
+    color: #4a5568;
+}
+
+.delete-btn {
+    background: #fed7d7;
+    color: #742a2a;
+    padding: 6px 12px;
+    border-radius: 4px;
+}
+
+.delete-btn:hover {
+    background: #feb2b2;
+}
+
+.clear-btn {
+    margin-top: 18px;
+    background: #4a5568;
+    color: #ffffff;
+    padding: 9px 16px;
+    border-radius: 4px;
+}
+
+.clear-btn:hover {
+    background: #2d3748;
+}
+
+#error {
+    color: #e53e3e;
+    font-weight: bold;
+}
+
+#successToast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #e6fffa;
+    color: #065f46;
+    padding: 12px 20px;
+    border-radius: 8px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+#successToast .tick {
+    background: #38b2ac;
+    color: white;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+>>>>>>> aa10dc0e3687c52e445df8d251edd0c7082bdd1a

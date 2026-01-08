@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
   background: linear-gradient(135deg, #f0f4f8, #d9e4f5);
@@ -40,3 +41,47 @@ audio, video {
   border-radius: 6px;
   display: inline-block;
 }
+=======
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #f0f4f8, #d9e4f5);
+  margin: 0;
+  padding: 40px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 40px;
+  color: #2c3e50;
+}
+
+.player-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 700px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h2 {
+  color: #3498db;
+  margin-bottom: 15px;
+}
+
+audio, video {
+  width: 100%;
+  border-radius: 8px;
+  outline: none;
+}
+
+.time-display {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #2c3e50;
+  background: #ecf0f1;
+  padding: 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+>>>>>>> aa10dc0e3687c52e445df8d251edd0c7082bdd1a
