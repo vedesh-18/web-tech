@@ -1,79 +1,106 @@
-const form = document.getElementById("registerForm");
-const role = document.getElementById("role");
-const skillsBox = document.getElementById("skillsBox");
+const form = document.querySelector('#registrationForm');
+const roleSelect = document.querySelector('#role');
+const submitBtn = document.querySelector('#submitBtn');
+const skillsBox = document.querySelector('#skillsBox');
+const pwdHint = document.querySelector('#pwdHint');
+const strengthBar = document.querySelector('.strength span');
 
-role.addEventListener("change", () => {
-    if (role.value === "teacher" || role.value === "admin") {
-        skillsBox.style.display = "block";
-    } else {
-        skillsBox.style.display = "none";
+const FIELDS = ['name', 'email', 'age', 'password', 'confirmPassword'];
+
+const validators = {
+    name: v => v.trim() ? "" : "Name is required",
+
+    email: v =>
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
+            ? ""
+            : "Invalid email address",
+
+    age: (v, role) => {
+        const n = Number(v);
+        if (!n) return "Age is required";
+        if (role === 'Student' && (n < 5 || n > 100)) return "Student: 5–100";
+        if (role === 'Teacher' && n < 21) return "Teacher: 21+";
+        if (role === 'Admin' && n < 18) return "Admin: 18+";
+        return "";
+    },
+
+    password: (v, role) => {
+        if (role === 'Admin') {
+            return v.length >= 10 && /[!@#$%^&*]/.test(v)
+                ? ""
+                : "10+ chars & symbol required";
+        }
+        return v.length >= 6 ? "" : "Minimum 6 characters";
+    },
+
+    confirmPassword: (v) =>
+        v === password.value ? "" : "Passwords do not match"
+};
+
+function setError(id, msg) {
+    const input = document.getElementById(id);
+    const error = document.getElementById(id + 'Error');
+    input.classList.toggle('invalid', !!msg);
+    error.textContent = msg;
+}
+
+function updatePasswordStrength(pwd) {
+    if (!pwd) {
+        strengthBar.style.width = '0%';
+        return;
     }
-});
-
-function showError(id, msg) {
-    document.getElementById(id).innerText = msg;
+    if (pwd.length >= 10) {
+        strengthBar.style.width = '100%';
+        strengthBar.style.background = '#22c55e';
+    } else {
+        strengthBar.style.width = '40%';
+        strengthBar.style.background = '#facc15';
+    }
 }
 
-function validateEmail(email, role) {
-    if (role === "teacher" && !email.endsWith("@school.edu")) return false;
-    if (role === "admin" && !email.endsWith("@admin.org")) return false;
-    return true;
+function updateRoleUI(role) {
+    if (role === 'Admin') {
+        skillsBox.style.display = 'none';
+        pwdHint.textContent = '(min 10 chars + symbol)';
+    } else {
+        skillsBox.style.display = 'block';
+        pwdHint.textContent = '(min 6 chars)';
+    }
 }
 
-function validatePassword(password, role) {
-    if (role === "student") return password.length >= 6;
-    if (role === "teacher") return password.length >= 8;
-    if (role === "admin")
-        return password.length >= 10 &&
-               /[A-Z]/.test(password) &&
-               /[0-9]/.test(password) &&
-               /[@#$%!]/.test(password);
-}
-
-form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
+function validateForm() {
+    const role = roleSelect.value;
     let valid = true;
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirmPassword").value;
-    const age = document.getElementById("age").value;
+    FIELDS.forEach(id => {
+        const value = document.getElementById(id).value;
+        const error = validators[id]
+            ? validators[id](value, role)
+            : "";
+        setError(id, error);
+        if (error) valid = false;
+    });
 
-    if (name === "") {
-        showError("nameErr", "Name required");
-        valid = false;
-    }
+    updatePasswordStrength(password.value);
+    submitBtn.disabled = !valid;
+    return valid;
+}
 
-    if (!validateEmail(email, role.value)) {
-        showError("emailErr", "Invalid email domain");
-        valid = false;
-    }
-
-    if (!validatePassword(password, role.value)) {
-        showError("passErr", "Weak password for selected role");
-        valid = false;
-    }
-
-    if (password !== confirmPassword) {
-        showError("confirmErr", "Passwords do not match");
-        valid = false;
-    }
-
-    if (age < 18) {
-        showError("ageErr", "Age must be 18+");
-        valid = false;
-    }
-
-    if (role.value === "") {
-        showError("roleErr", "Select a role");
-        valid = false;
-    }
-
-    if (valid) {
-        alert("Registration Successful!");
-        form.reset();
-        skillsBox.style.display = "none";
-    }
+roleSelect.addEventListener('change', () => {
+    updateRoleUI(roleSelect.value);
+    validateForm();
 });
+
+form.addEventListener('input', validateForm);
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!validateForm()) return;
+    alert('Registration Successful!');
+    form.reset();
+    strengthBar.style.width = '0%';
+    validateForm();
+});
+
+updateRoleUI(roleSelect.value);
+validateForm();

@@ -1,45 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Adaptive Registration</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adaptive Registration System</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h2>User Registration</h2>
+<main class="container">
+    <h2>Adaptive Registration</h2>
 
-<form id="registerForm">
+    <form id="registrationForm" novalidate>
 
-    <input type="text" id="name" placeholder="Name">
-    <span class="error" id="nameErr"></span>
+        <div class="field">
+            <label for="name">Name</label>
+            <input id="name" type="text">
+            <small class="error" id="nameError"></small>
+        </div>
 
-    <input type="email" id="email" placeholder="Email">
-    <span class="error" id="emailErr"></span>
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email">
+            <small class="error" id="emailError"></small>
+        </div>
 
-    <input type="password" id="password" placeholder="Password">
-    <span class="error" id="passErr"></span>
+        <div class="field">
+            <label for="role">Role</label>
+            <select id="role">
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
 
-    <input type="password" id="confirmPassword" placeholder="Confirm Password">
-    <span class="error" id="confirmErr"></span>
+        <div class="field" id="skillsBox">
+            <label for="skills">Skills</label>
+            <input id="skills" type="text">
+        </div>
 
-    <input type="number" id="age" placeholder="Age">
-    <span class="error" id="ageErr"></span>
+        <div class="field">
+            <label for="age">Age</label>
+            <input id="age" type="number">
+            <small class="error" id="ageError"></small>
+        </div>
 
-    <select id="role">
-        <option value="">Select Role</option>
-        <option value="student">Student</option>
-        <option value="teacher">Teacher</option>
-        <option value="admin">Admin</option>
-    </select>
-    <span class="error" id="roleErr"></span>
+        <div class="field">
+            <label for="password">
+                Password <span id="pwdHint">(min 6 chars)</span>
+            </label>
+            <input id="password" type="password">
+            <div class="strength">
+                <span></span>
+            </div>
+            <small class="error" id="passwordError"></small>
+        </div>
 
-    <div id="skillsBox" style="display:none;">
-        <input type="text" id="skills" placeholder="Skills">
-    </div>
+        <div class="field">
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword" type="password">
+            <small class="error" id="confirmPasswordError"></small>
+        </div>
 
-    <button type="submit">Register</button>
-
-</form>
+        <button id="submitBtn" type="submit" disabled>Register</button>
+    </form>
+</main>
 
 <script src="script.js"></script>
 </body>

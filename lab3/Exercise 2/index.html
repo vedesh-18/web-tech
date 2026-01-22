@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Shopping Cart</title>
+    <style>
+        /* CSS STYLES */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; padding: 40px; color: #333; }
+        .cart-container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 30px; }
+        
+        .form-container { display: flex; gap: 10px; margin-bottom: 30px; background: #f8f9fa; padding: 20px; border-radius: 10px; }
+        input, select { padding: 12px; border: 1px solid #ddd; border-radius: 8px; flex: 1; font-size: 14px; }
+        
+        button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .btn-add { background: #3498db; color: white; }
+        .btn-add:hover { background: #2980b9; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { background: #f8f9fa; padding: 15px; text-align: left; border-bottom: 2px solid #dee2e6; }
+        td { padding: 15px; border-bottom: 1px solid #eee; }
+
+        .qty-controls { display: flex; align-items: center; gap: 10px; }
+        .qty-btn { background: #e9ecef; color: #333; padding: 5px 12px; }
+        .qty-btn:hover { background: #dee2e6; }
+        .btn-remove { background: #ff7675; color: white; padding: 5px 12px; }
+
+        .summary-section { display: flex; justify-content: space-between; margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px; }
+        .coupon-area { display: flex; gap: 10px; align-items: center; }
+        .totals { text-align: right; }
+        .totals p { margin: 8px 0; font-size: 16px; color: #636e72; }
+        .totals h2 { margin-top: 10px; color: #2d3436; border-top: 1px solid #dfe6e9; padding-top: 10px; }
+        .discount-text { color: #d63031; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="cart-container">
+        <h1>🛒 Intelligent Shopping Cart</h1>
+        
+        <div class="form-container">
+            <input type="text" id="pName" placeholder="Product Name">
+            <input type="number" id="pPrice" placeholder="Price ($)">
+            <select id="pCategory">
+                <option value="General">General</option>
+                <option value="Electronics">Electronics (15% Off)</option>
+                <option value="Food">Food</option>
+            </select>
+            <button class="btn-add" onclick="handleAddItem()">Add Item</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="cart-body">
+                </tbody>
+        </table>
+
+        <div class="summary-section">
+            <div class="coupon-area">
+                <input type="text" id="couponInput" placeholder="Enter code (e.g. SAVE20)">
+                <button class="btn-add" onclick="handleApplyCoupon()">Apply</button>
+            </div>
+            <div class="totals">
+                <p>Gross Total: <span id="subtotal-display">$0.00</span></p>
+                <p>Discounts Applied: <span id="discount-display" class="discount-text">-$0.00</span></p>
+                <p id="night-discount-msg" style="display:none; color: #0984e3; font-size: 12px;">🌙 Late Night 5% Discount Applied!</p>
+                <h2>Final Price: <span id="final-display">$0.00</span></h2>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* JAVASCRIPT LOGIC */
+
+        // 1. Initial Array of Products (Requirement 1)
+        let cartItems = [
+            { id: 101, name: "Gaming Mouse", price: 50.00, category: "Electronics", quantity: 1 },
+            { id: 102, name: "Coffee Beans", price: 15.00, category: "Food", quantity: 2 },
+            { id: 103, name: "USB Cable", price: 10.00, category: "Electronics", quantity: 6 }
+        ];
+
+        let couponDiscount = 0;
+
+        // Start the app
+        window.onload = renderUI;
+
+        // 2. Dynamic Update Functions (Requirement 2)
+        function handleAddItem() {
+            const nameEl = document.getElementById('pName');
+            const priceEl = document.getElementById('pPrice');
+            const catEl = document.getElementById('pCategory');
+
+            const name = nameEl.value.trim();
+            const price = parseFloat(priceEl.value);
+            const category = catEl.value;
+
+            if (!name || isNaN(price) || price <= 0) {
+                alert("Please enter a valid product name and price.");
+                return;
+            }
+
+            // Check if product exists
+            const existing = cartItems.find(i => i.name.toLowerCase() === name.toLowerCase());
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cartItems.push({ id: Date.now(), name, price, category, quantity: 1 });
+            }
+
+            // Reset inputs
+            nameEl.value = '';
+            priceEl.value = '';
+            renderUI();
+        }
+
+        function updateQty(id, change) {
+            const item = cartItems.find(i => i.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cartItems = cartItems.filter(i => i.id !== id);
+                }
+            }
+            renderUI();
+        }
+
+        // 3. String Methods & Coupon Logic (Requirement 4)
+        function handleApplyCoupon() {
+            const input = document.getElementById('couponInput').value.trim().toUpperCase();
+            
+            // Validate: Must start with SAVE and have a number
+            if (input.startsWith("SAVE") && input.length > 4) {
+                const numericPart = input.substring(4); // Use substring string method
+                if (!isNaN(numericPart)) {
+                    couponDiscount = parseInt(numericPart) / 100;
+                    alert(`Success: ${numericPart}% discount applied!`);
+                }
+            } else {
+                alert("Invalid Code. Format: SAVE10, SAVE50, etc.");
+                couponDiscount = 0;
+            }
+            renderUI();
+        }
+
+        // 4. Rule-Driven Logic & UI Update (Requirement 3, 5, 6)
+        function renderUI() {
+            const tbody = document.getElementById('cart-body');
+            tbody.innerHTML = '';
+
+            let subtotal = 0;
+            let totalSavings = 0;
+
+            // Check time of day (Requirement: Time based discount)
+            const currentHour = new Date().getHours();
+            const isLateNight = currentHour >= 21 || currentHour <= 5; // 9PM to 5AM
+            document.getElementById('night-discount-msg').style.display = isLateNight ? 'block' : 'none';
+
+            cartItems.forEach(item => {
+                const lineTotal = item.price * item.quantity;
+                subtotal += lineTotal;
+
+                // Rule A: Category Discount (Electronics 15% off)
+                if (item.category === "Electronics") {
+                    totalSavings += (lineTotal * 0.15);
+                }
+
+                // Rule B: Bulk Discount (10% off if Qty >= 5)
+                if (item.quantity >= 5) {
+                    totalSavings += (lineTotal * 0.10);
+                }
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>${item.name}</strong></td>
+                        <td>${item.category}</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td class="qty-controls">
+                            <button class="qty-btn" onclick="updateQty(${item.id}, -1)">-</button>
+                            ${item.quantity}
+                            <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+                        </td>
+                        <td>$${lineTotal.toFixed(2)}</td>
+                        <td><button class="btn-remove" onclick="updateQty(${item.id}, -${item.quantity})">Remove</button></td>
+                    </tr>
+                `;
+            });
+
+            // Calculate final totals
+            let afterRulesTotal = subtotal - totalSavings;
+            
+            // Add Time of Day Discount (Extra 5% if late night)
+            if (isLateNight) {
+                const nightSavings = afterRulesTotal * 0.05;
+                totalSavings += nightSavings;
+                afterRulesTotal -= nightSavings;
+            }
+
+            // Apply Coupon
+            const couponSavings = afterRulesTotal * couponDiscount;
+            const finalTotal = afterRulesTotal - couponSavings;
+            totalSavings += couponSavings;
+
+            // Update DOM (Requirement 6)
+            document.getElementById('subtotal-display').innerText = `$${subtotal.toFixed(2)}`;
+            document.getElementById('discount-display').innerText = `-$${totalSavings.toFixed(2)}`;
+            document.getElementById('final-display').innerText = `$${finalTotal.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

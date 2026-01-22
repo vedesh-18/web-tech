@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Monitor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="monitor-container">
+        <header>
+            <h1>User Activity Monitor</h1>
+            <div class="status-bar">
+                <span>Status: <strong id="status-text">Monitoring...</strong></span>
+                <div id="warning-box" class="warning-hidden">⚠️ Suspicious Activity Detected!</div>
+            </div>
+        </header>
+
+        <main id="interaction-zone">
+            <h3>Interaction Zone</h3>
+            <p>Click, type, or focus on elements here to log activity.</p>
+            <div class="input-row">
+                <input type="text" id="test-input" placeholder="Type something...">
+                <button id="test-button">Click Me</button>
+            </div>
+            <div class="box-container">
+                <div class="outer-box" id="outer">
+                    Outer (Bubbling Zone)
+                    <div class="inner-box" id="inner">Inner Box</div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="log-section">
+            <div class="log-header">
+                <h3>Activity Log</h3>
+                <div class="actions">
+                    <button class="btn-export" onclick="exportLog()">Export Log</button>
+                    <button class="btn-reset" onclick="resetLog()">Reset</button>
+                </div>
+            </div>
+            <div id="log-display"></div>
+        </aside>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

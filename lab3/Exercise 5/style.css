@@ -1,0 +1,226 @@
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --success: #10b981;
+    --error: #ef4444;
+    --bg-main: #f8fafc;
+    --card-bg: #ffffff;
+    --text-head: #0f172a;
+    --text-body: #475569;
+    --text-muted: #94a3b8;
+    --radius: 12px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-body);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.app-wrapper {
+    background: var(--card-bg);
+    width: 100%;
+    max-width: 480px;
+    padding: 2.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.stepper-container {
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.step-node {
+    width: 36px;
+    height: 36px;
+    background: var(--card-bg);
+    border: 2px solid #e2e8f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.step-node.active {
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    transform: scale(1.1);
+}
+
+.step-node.complete {
+    background: var(--success);
+    border-color: var(--success);
+    color: white;
+}
+
+.progress-track {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #e2e8f0;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--success);
+    width: 0%;
+    transition: width 0.4s ease-in-out;
+}
+
+header h2 {
+    color: var(--text-head);
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+header p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin-bottom: 2rem;
+}
+
+.field-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-head);
+    margin-bottom: 0.5rem;
+}
+
+input, select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-head);
+    transition: var(--transition);
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+input.invalid {
+    border-color: var(--error);
+}
+
+.error-msg {
+    color: var(--error);
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 0.4rem;
+    height: 1rem;
+}
+
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    padding: 0.8rem 1.8rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-muted);
+    padding: 0.8rem 1.2rem;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+    animation: fadeInSlide 0.4s ease-out;
+}
+
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.summary-panel {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.checkbox-group input {
+    width: 18px;
+    height: 18px;
+}

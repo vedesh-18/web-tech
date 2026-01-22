@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Multi-Step Engine</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <div class="stepper-container">
+            <div class="step-indicator" id="stepIndicator">
+                <div class="step-node active" data-step="1">1</div>
+                <div class="step-line"></div>
+                <div class="step-node" data-step="2">2</div>
+                <div class="step-line"></div>
+                <div class="step-node" data-step="3">3</div>
+                <div class="step-line"></div>
+                <div class="step-node" data-step="4">4</div>
+            </div>
+            <div class="progress-track">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="form-viewport">
+            <form id="workflowForm" novalidate>
+                <section class="form-step active" data-step="1">
+                    <header>
+                        <h2>Security Credentials</h2>
+                        <p>Set up your unique account identity.</p>
+                    </header>
+                    <div class="field-group">
+                        <label>Identity Handle</label>
+                        <input type="text" name="username" data-rules="required|min:3" placeholder="@username">
+                        <small class="error-msg"></small>
+                    </div>
+                    <div class="field-group">
+                        <label>Security Email</label>
+                        <input type="email" name="email" data-rules="required|email" placeholder="dev@engine.io">
+                        <small class="error-msg"></small>
+                    </div>
+                </section>
+
+                <section class="form-step" data-step="2">
+                    <header>
+                        <h2>Personal Matrix</h2>
+                        <p>Verified data for identity management.</p>
+                    </header>
+                    <div class="field-group">
+                        <label>Birth Date</label>
+                        <input type="date" name="dob" data-rules="required|age:18">
+                        <small class="error-msg"></small>
+                    </div>
+                </section>
+
+                <section class="form-step" data-step="3">
+                    <header>
+                        <h2>System Preferences</h2>
+                    </header>
+                    <div class="field-group">
+                        <label>Operational Domain</label>
+                        <select name="domain" data-rules="required">
+                            <option value="">Choose Domain...</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Operations">Operations</option>
+                            <option value="Security">Security</option>
+                        </select>
+                        <small class="error-msg"></small>
+                    </div>
+                </section>
+
+                <section class="form-step" data-step="4">
+                    <header>
+                        <h2>Data Verification</h2>
+                    </header>
+                    <div id="dataSummary" class="summary-panel"></div>
+                    <div class="field-group checkbox-group">
+                        <input type="checkbox" name="consent" id="consent" data-rules="checked">
+                        <label for="consent">I verify the integrity of provided data</label>
+                        <small class="error-msg"></small>
+                    </div>
+                </section>
+
+                <footer class="form-footer">
+                    <button type="button" class="btn-secondary" id="prevBtn" hidden>Back</button>
+                    <button type="button" class="btn-primary" id="nextBtn">Continue</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

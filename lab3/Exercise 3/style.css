@@ -1,0 +1,88 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.survey-card {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+h1 {
+    text-align: center;
+    color: #1a73e8;
+    margin-bottom: 30px;
+}
+
+.question-block {
+    margin-bottom: 25px;
+    padding: 15px;
+    border-left: 4px solid #e0e0e0;
+    transition: 0.3s;
+}
+
+.question-block.invalid {
+    border-left-color: #d93025;
+    background-color: #fdf6f6;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.options-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.error-message {
+    color: #d93025;
+    font-size: 13px;
+    margin-top: 8px;
+    display: none;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #1557b0;
+}
+
+.hidden {
+    display: none;
+}
+
+#success-msg {
+    text-align: center;
+    color: #188038;
+    font-weight: bold;
+    margin-top: 20px;
+}

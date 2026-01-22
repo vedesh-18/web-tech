@@ -1,30 +1,85 @@
+* {
+    box-sizing: border-box;
+    font-family: system-ui, sans-serif;
+}
+
 body {
-    font-family: Arial;
-    background: #f2f2f2;
-    padding: 20px;
+    background: #f4f6f8;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
 }
 
-form {
-    background: white;
-    padding: 20px;
-    width: 300px;
+.container {
+    background: #fff;
+    padding: 30px;
+    width: 380px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-input, select, button {
-    width: 100%;
-    margin: 8px 0;
-    padding: 8px;
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.field {
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+input, select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #dcdcdc;
+    outline: none;
+}
+
+input.invalid {
+    border-color: #e74c3c;
+    background: #fff5f5;
 }
 
 .error {
-    color: red;
-    font-size: 12px;
+    font-size: 11px;
+    color: #e74c3c;
+    min-height: 12px;
 }
 
-.invalid {
-    border: 2px solid red;
+.strength {
+    height: 5px;
+    background: #eee;
+    border-radius: 5px;
+    margin-top: 6px;
+    overflow: hidden;
 }
 
-.valid {
-    border: 2px solid green;
+.strength span {
+    height: 100%;
+    width: 0;
+    display: block;
+    transition: 0.3s;
+}
+
+button {
+    margin-top: 10px;
+    padding: 12px;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
 }
